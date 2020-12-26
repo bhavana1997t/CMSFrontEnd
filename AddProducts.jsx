@@ -1,17 +1,19 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios';
-import "./company.css";
+import "./product.css";
 
-function AddCompany() {
+function AddProduct() {
 
     function submitHandler(event){
         event.preventDefault();
         let object = {
             
-          companyName:document.getElementById('cname').value,
-          companyPhone:document.getElementById('cph').value,
-            companyAddress:document.getElementById('cadd').value
+            productName:document.getElementById('pname').value,
+            productDescription:document.getElementById('pdesc').value,
+            company:{
+                companyId:document.getElementById('cid').value
+            }
             
         };
         let json = JSON.stringify(object);
@@ -22,7 +24,7 @@ function AddCompany() {
           },
         };
         axios
-          .post(" http://localhost:8080/CustomizePlan/company", json, config)
+          .post("http://localhost:8080/CustomizePlan/products", json, config)
           .then((response) => {
             console.log(response);
           })
@@ -30,54 +32,54 @@ function AddCompany() {
             console.log(error);
           });
           let ele=document.getElementById('co');
-          ele.innerHTML="Company Added Successfully";
+          ele.innerHTML="product Added Successfully";
           ele.style.textAlign="center";
           ele.style.marginBottom="30px"
     }
   return (
     <div className="col-md-6 offset-md-3 card card-body mt-5 coform mb-5" id="co">
       <form name="myForm" onSubmit={submitHandler}>
-        <h3 className="mb-5 text-muted text-center mt-5">Add Company</h3>
+        <h3 className="mb-5 text-muted text-center mt-5">Add Products</h3>
 
         <div className="form-group">
-          <label>Company Name</label>
+          <label>product Name</label>
           <input
             type="text"
-            id="cname"
+            id="pname"
             className="form-control"
             name="companyName"
-            placeholder="Enter Company Name"
+            placeholder="Enter product Name"
           />
         </div>
 
         <div className="form-group">
-          <label>Phone</label>
+          <label>product Description</label>
           <input
-            type="number"
-            id="cph"
-            name="companyPhone"
+            type="text"
+            id="pdesc"
+            name="productdescription"
             className="form-control"
-            placeholder="Enter Contact Number"
+            placeholder="Enter product description"
           />
         </div>
 
         <div className="form-group">
-          <label>Company Address</label>
+          <label>Company Id</label>
           <textarea
             type="textarea"
-            id="cadd"
-            name="companyAddress"
+            id="cid"
+            name="companyId"
             className="form-control"
-            placeholder="Enter Company Address"
+            placeholder="Enter CompanyId"
           />
         </div>
 
       
         <div>
-          <button className="btn btn-primary mt-4 subtn" type="submit">Add Company</button>
+          <button className="btn btn-primary mt-4 subtn" type="submit">Add Product</button>
         </div>
       </form>
     </div>
   );
 }
-export default AddCompany;
+export default AddProduct;

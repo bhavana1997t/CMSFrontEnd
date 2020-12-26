@@ -1,69 +1,70 @@
 import React from "react";
-import { Form, Button, InputGroup, FormControl, Jumbotron} from 'react-bootstrap';
-import './bundel.css'
-// import axios from  'axios';
-// import { withRouter } from "react-router";
+import "bootstrap/dist/css/bootstrap.min.css";
+import axios from 'axios';
+import "./bundel.css";
 
-function AddBundel(props){
-    // const handleSubmitClick = (e) => {
-    //     e.preventDefault();
-    //     let object = {};
-    //     let formData=new FormData(e.target);
-    //     formData.forEach((value,key)=>{
-    //         object[key] = value;
+
+function AddBundel() {
+
+    function submitHandler(event){
+        event.preventDefault();
+        let object = {
             
-    //     }
-    //     );
-    //     console.log(object);
-    //     let json = JSON.stringify(object); 
-    //     console.log(json); 
-
-
-    //     const config = {     
-    //         headers: { 'content-type' : "application/json" }
-    //     }
-
-        // axios.post('http://localhost:8080/StockManagement/company/register', json,config).then((response)=>{
-        //      console.log(response);
-        //    })
-        //    .catch((error)=>{
-        //      console.log(error);
-        //   });
-        //   props.history.push("/AddCompany");
-
-        // }
-        return (
+            bundelName:document.getElementById('bname').value,
+            bundelDescription:document.getElementById('bdesc').value
             
-            <div className="col-md-4 offset-4 card card-body mt-5">
-                
-                <form >
-                    <h3>Add Bundel</h3>
-
-                    <div className="form-group">
-                        <label> Bundel Name</label>
-                        <input type="text" className="form-control" name="userName"  placeholder="enter your full name"  required/>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Bundel Decription</label>
-                        <input type="number" className="form-control" name="phone" placeholder="enter your mobile number" />
-                    </div>
-
-                    <div className="form-group">
-                        <label>plan Id</label>
-                        <input type="number" className="form-control" name="product" placeholder="Enter product Id"  required/>
-                    </div>  
-                   <br></br>
-                    
-                <div>
-                    <Button variant="outline-primary mr-5" type="submit" >Add </Button>{' '}
-                     <Button variant="outline-danger mr-5" className="offset-4 " type= "reset">cancel</Button>{' '}
-                    </div>
-
-                </form>
-            </div>
-     
-        );
+        };
+        let json = JSON.stringify(object);
+        console.log(json);
+        const config = {
+          headers: {
+            "content-type": "application/json",
+          },
+        };
+        axios
+          .post("http://localhost:8080/CustomizePlan/bundels", json, config)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+          let ele=document.getElementById('co');
+          ele.innerHTML="bundel Added Successfully";
+          ele.style.textAlign="center";
+          ele.style.marginBottom="30px"
     }
+  return (
+    <div className="col-md-6 offset-md-3 card card-body mt-5 coform mb-5" id="co">
+      <form name="myForm" onSubmit={submitHandler}>
+        <h3 className="mb-5 text-muted text-center mt-5">Add Bundel</h3>
 
+        <div className="form-group">
+          <label>Bundel Name</label>
+          <input
+            type="text"
+            id="bname"
+            className="form-control"
+            name="BundelName"
+            placeholder="Enter Bundel Name "
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Bundel Description</label>
+          <input
+            type="text"
+            id="bdesc"
+            name="productdescription"
+            className="form-control"
+            placeholder="Enter plan description"
+          />
+        </div>
+        <div>
+          <button className="btn btn-primary mt-4 subtn" type="submit">Add Bundel</button>
+        </div>
+      </form>
+    </div>
+  );
+}
 export default AddBundel;
